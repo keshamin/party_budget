@@ -4,7 +4,7 @@
       <li v-for="coefficient in editableCoefficients" :key="coefficient.id">
         <span v-if="columnGetter(coefficient[columnKey])">
           {{ getColumnRepr(columnGetter(coefficient[columnKey])) }}:
-          <input type="number" v-model.number="coefficient.coefficient">
+          <input type="number" v-model.number="coefficient.coeff">
         </span>
       </li>
     </ul>
@@ -27,19 +27,17 @@
       originalCoefficients: [],
     }},
 
+    created() {
+      this.getMyCoefficients()
+    },
+
     computed: {
-      ...mapGetters('coefficients', [
+      ...mapGetters('parties', [
+        'getMemberById',
+        'getExpenseById',
         'getCoefficientsBy',
         'coefficientsSum',
       ]),
-      ...mapGetters({party: 'parties/selectedParty'}),
-      ...mapGetters('members', [
-        'getMemberById',
-        'membersCount'
-      ]),
-      ...mapGetters('expenses', ['getExpenseById']),
-      ...mapState('members', ['members']),
-      ...mapState('expenses', ['expenses']),
 
       columnGetter() {
         if (this.mode === coefPaneModes.MEMBER) {
@@ -61,7 +59,7 @@
     },
 
     methods: {
-      ...mapActions('coefficients', ['updateCoefficient']),
+      ...mapActions('parties', ['updateCoefficients']),
 
       getMyCoefficients() {
         // Deep copying Vuex array is necessary
@@ -71,7 +69,7 @@
 
       getColumnRepr(columnObj) {
         if (this.mode === coefPaneModes.MEMBER) {
-          return columnObj.note
+          return columnObj.name
         }
         if (this.mode === coefPaneModes.EXPENSE) {
           return columnObj.name
@@ -80,18 +78,13 @@
 
       saveCoeffs() {
         let updatedCoeffs = this.editableCoefficients.filter(
-          (coeff, index) => coeff.coefficient !== this.originalCoefficients[index].coefficient
+          (coeff, index) => coeff.coeff !== this.originalCoefficients[index].coeff
         )
-        console.log(updatedCoeffs)
-        updatedCoeffs.forEach(coeff => this.updateCoefficient(coeff))
+        this.updateCoefficients(updatedCoeffs)
       },
     },
 
     watch: {
-      selectedPartyId: {
-        immediate: true,
-        handler: 'getMyCoefficients',
-      },
       coefficientsSum: {
         handler: function () {
           this.getMyCoefficients()

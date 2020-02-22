@@ -35,7 +35,6 @@
       coefPaneModes: coefPaneModes,
     }},
     methods: {
-      // ...mapActions('parties', ['removeMember','updateMember',]),
       ...mapActions('parties', [
         'removeMember',
         'renameMember',

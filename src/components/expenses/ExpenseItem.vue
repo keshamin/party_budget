@@ -34,24 +34,24 @@
         <ion-icon name="close" @click="cancelEdit"></ion-icon>
       </span>
 
-      <!-- <coefficients-pane :mode="coefPaneModes.EXPENSE" :mode-key="expense.id"/> -->
+      <coefficients-pane :mode="coefPaneModes.EXPENSE" :mode-key="expense.id"/>
     </li>
   </span>
 </template>
 
 <script>
   import {mapGetters, mapActions, mapState} from 'vuex'
-  // import coefPaneModes from '../coefficients/coef-pane-modes'
-  // import CoefficientsPane from "../coefficients/CoefficientsPane";
+  import coefPaneModes from '../coefficients/coef-pane-modes'
+  import CoefficientsPane from "../coefficients/CoefficientsPane";
 
   export default {
     name: "ExpenseItem",
-    // components: {CoefficientsPane},
+    components: {CoefficientsPane},
     props: ['expense'],
     data() { return {
       editMode: false,
       updatedExpense: {},
-      // coefPaneModes: coefPaneModes,
+      coefPaneModes,
     }},
     async created() {
     }, 

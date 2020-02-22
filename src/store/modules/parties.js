@@ -54,7 +54,9 @@ const mutations = {
     state.activeParty.coefficients.findIndex(coefficient => coefficient.id === coefficientId)
   )},
   updateCoefficient: (state, updatedCoefficient) => {
-    const coefficientIdx = state.activeParty.coefficients.findIndex(coefficient => coefficient.id === updatedCoefficient.id)
+    const coefficientIdx = state.activeParty.coefficients.findIndex(coefficient => 
+      coefficient.memberId === updatedCoefficient.memberId && coefficient.expenseId === updatedCoefficient.expenseId
+    )
     state.activeParty.coefficients.splice(coefficientIdx, 1, updatedCoefficient)
   },
 };
@@ -189,10 +191,23 @@ const actions = {
     commit('updateTransfer', updatedTransfer)
   },
 
+  updateCoefficients({commit, rootState}, updatedCoefficients) {
+    updatedCoefficients.forEach(coeff => commit('updateCoefficient', coeff))
+    Repo.saveParty(rootState.parties.activeParty)
+  }
+
 };
 
 const getters = {
-  getMemberById: state => memberId => state.activeParty.members.find(mem => mem.id === memberId)
+  membersCount: state => state.activeParty.members.length,
+  getMemberById: state => memberId => state.activeParty.members.find(mem => mem.id === memberId),
+
+  getExpenseById: state => expenseId => state.activeParty.expenses.find(exp => exp.id === expenseId),
+
+  coefficientsSum: state => state.activeParty.coefficients.reduce((result, coeff) => result + coeff.coefficient, 0),
+  getCoefficientsBy: state => (field, value) => {
+    return state.activeParty.coefficients.filter(coef => coef[field] === value)
+  },
 };
 
 export default {
