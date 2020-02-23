@@ -6,8 +6,7 @@ on:
       - master    
 
 jobs:
-  build:
-
+  build & deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,5 +15,9 @@ jobs:
       run: npm i
     - name: Build Vue.js app
       run: npm build
-    - name: GitHub Pages Deploy
-      uses: maxheld83/ghpages@v0.2.1
+    - name: Build and Deploy
+      uses: JamesIves/github-pages-deploy-action@releases/v3
+      with:
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        BRANCH: gh-pages # The branch the action should deploy to.
+        FOLDER: dist # The folder the action should deploy.
