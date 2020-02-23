@@ -7,7 +7,7 @@
     </label>
     <label>
       Сумма:<br>
-      <input type="number" v-model="transferAmount"><br>
+      <input type="number" v-model.number="transferAmount"><br>
     </label>
     <label>
       Отправитель:<br>
@@ -51,6 +51,10 @@
       ...mapActions('parties', ['addTransfer']),
 
       async createTransferHandler() {
+        const validationResult = this.validate()
+
+        if (!validationResult.valid) { return }
+
         const transfer = Transfer.create({
           party: this.activeParty,
           name: this.transferNote,
@@ -67,7 +71,30 @@
         this.transferAmount = 0
         this.transferSenderId = null
         this.transferReceiverId = null
-      }
+      },
+
+      validate() {
+        let result = {valid: null, errors: []}
+
+        if (!this.transferAmount > 0) {
+          result.errors.push('Сумма перевода должна быть больше 0!')
+        }
+
+        if (this.transferSenderId === null) {
+          result.errors.push('Выберите отправителя перевода!')
+        }
+
+        if (this.transferReceiverId === null) {
+          result.errors.push('Выберите получателя перевода!')
+        }
+
+        if (this.transferReceiverId === this.transferSenderId) {
+          result.errors.push('Отправитель и получатель перевода не должны совпадать!')
+        }
+
+        result.valid = result.errors.length > 0 ? false : true
+        return result
+      },
     }
   }
 </script>

@@ -27,8 +27,8 @@ const mutations = {
     )
   )},
   updateMember: (state, updatedMember) => {
-    const expenseIdx = state.activeParty.expenses.findIndex(expense => expense.id === updatedMember.id)
-    state.activeParty.expenses.splice(expenseIdx, 1, updatedMember)
+    const memberIdx = state.activeParty.members.findIndex(member => member.id === updatedMember.id)
+    state.activeParty.expenses.splice(memberIdx, 1, updatedMember)
   },
 
   addExpense: (state, newExpense) => state.activeParty.expenses.push(newExpense),
@@ -137,9 +137,8 @@ const actions = {
   },
 
   updateMember({commit, rootState}, updatedMember) {
-    let activePartyDeepCopy = JSON.parse(JSON.stringify(rootState.parties.activeParty))
-    Repo.updateMember(activePartyDeepCopy, updatedMember)
     commit('updateMember', updatedMember)
+    Repo.saveParty(rootState.parties.activeParty)
   },
 
   addExpense({commit, rootState}, newExpense) {

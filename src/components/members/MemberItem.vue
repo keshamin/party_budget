@@ -12,26 +12,22 @@
       <ion-icon name="checkmark" @click="confirmEdit"></ion-icon>
       <ion-icon name="close" @click="cancelEdit"></ion-icon>
     </span>
-    <loading v-show="isLoading"/>
-
     <coefficients-pane :mode="coefPaneModes.MEMBER" :mode-key="member.id"/>
   </li>
 </template>
 
 <script>
   import {mapActions, mapMutations} from 'vuex'
-  import Loading from "../common/Loading";
   import CoefficientsPane from "../coefficients/CoefficientsPane";
   import coefPaneModes from "../coefficients/coef-pane-modes"
 
   export default {
     name: "MemberItem",
-    components: {CoefficientsPane, Loading},
+    components: {CoefficientsPane},
     props: ['member'],
     data() { return {
       updatedMember: {},
       editMode: false,
-      isLoading: false,
       coefPaneModes: coefPaneModes,
     }},
     methods: {

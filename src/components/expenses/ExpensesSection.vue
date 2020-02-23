@@ -6,7 +6,7 @@
 </template>
 
 <script>
-  import {mapState, mapActions, mapMutations} from 'vuex'
+  import {mapState} from 'vuex'
 
   import ExpensesList from "./ExpensesList";
   import ExpenseForm from "./ExpenseForm";

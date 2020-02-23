@@ -24,8 +24,22 @@
       ...mapActions('parties', ['addMember']),
 
       createMemberHandler() {
+        const validationResult = this.validate()
+
+        if (!validationResult.valid) { return }
+        
         this.addMember(this.memberName)
         this.memberName = ''
+      },
+
+      validate() {
+        let result = {valid: null, errors: []}
+        if (!this.memberName.length > 0) {
+          result.errors.push('Имя участника не может быть пустым!')
+        }
+
+        result.valid = result.errors.length > 0 ? false : true
+        return result
       }
     }
   }

@@ -7,12 +7,12 @@
     </label>
     <label>
       Сумма:<br>
-      <input type="number" v-model="expenseAmount"><br>
+      <input type="number" v-model.number="expenseAmount"><br>
     </label>
     <label>
       Кто заплатил:<br>
       <select v-model="expenseMadeById">
-        <option v-for="member in activeParty.members" v-bind:value="member.id">
+        <option v-for="member in activeParty.members" v-bind:value="member.id" :key="member.id">
           {{ member.name }}
         </option>
       </select><br>
@@ -42,6 +42,10 @@
       ...mapActions('parties', ['addExpense']),
 
       async createExpenseHandler() {
+        const validationResult = this.validate()
+
+        if (!validationResult.valid) { return }
+
         let expense = Expense.create({
           party: this.activeParty,
           name: this.expenseName,
@@ -57,7 +61,25 @@
         this.expenseName = ''
         this.expenseAmount = 0
         this.expenseMadeById = null
-      }
+      },
+
+      validate() {
+        let result = {valid: null, errors: []}
+        if (!this.expenseName.length > 0) {
+          result.errors.push('Название расхода не может быть пустым!')
+        }
+
+        if (!this.expenseAmount > 0) {
+          result.errors.push('Сумма расхода должна быть больше 0!')
+        }
+
+        if (this.expenseMadeById === null) {
+          result.errors.push('Выберите оплатившего участника!')
+        }
+
+        result.valid = result.errors.length > 0 ? false : true
+        return result
+      },
     }
   }
 </script>

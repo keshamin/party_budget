@@ -23,7 +23,7 @@
       ...mapActions('parties', ['selectParty']),
       selectFirstParty() {
         if (this.activeParty === null && this.partySummaries.lenght > 0) {
-          selectParty(this.partySummaries[0].id)
+          this.selectParty(this.partySummaries[0].id)
         }
       },
     },

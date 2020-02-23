@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-show="coefficients.length">
     <ul>
       <li v-for="coefficient in editableCoefficients" :key="coefficient.id">
         <span v-if="columnGetter(coefficient[columnKey])">
@@ -38,6 +38,9 @@
         'getCoefficientsBy',
         'coefficientsSum',
       ]),
+      coefficients() {
+        return this.getCoefficientsBy(this.field, this.modeKey)
+      },
 
       columnGetter() {
         if (this.mode === coefPaneModes.MEMBER) {
@@ -85,11 +88,14 @@
     },
 
     watch: {
+      // This watch is for when coeffs are edited via some other section
       coefficientsSum: {
         handler: function () {
           this.getMyCoefficients()
         },
       },
+
+      
     },
 
   }
