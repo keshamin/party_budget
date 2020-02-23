@@ -1,0 +1,20 @@
+name: Publish to GH Pages from master
+
+on:
+  push:
+    branches:    
+      - master    
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install Dependencies
+      run: npm i
+    - name: Build Vue.js app
+      run: npm build
+    - name: GitHub Pages Deploy
+      uses: maxheld83/ghpages@v0.2.1
