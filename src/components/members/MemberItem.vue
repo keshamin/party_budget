@@ -2,7 +2,7 @@
   <li>
     <span v-show="!editMode">{{member.name}}</span>
     <span v-show="editMode"><input type="text" v-model="updatedMember.name"></span>
-    Total Due: {{totalDue}}
+    Total Due: {{totalDue.toFixed(2)}}
 
     <span v-show="!editMode">
       <ion-icon name="create" @click="startEdit"></ion-icon>
