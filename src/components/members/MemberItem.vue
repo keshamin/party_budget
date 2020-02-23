@@ -2,7 +2,7 @@
   <li>
     <span v-show="!editMode">{{member.name}}</span>
     <span v-show="editMode"><input type="text" v-model="updatedMember.name"></span>
-    Total Due: {{member.total_due}}
+    Total Due: {{totalDue}}
 
     <span v-show="!editMode">
       <ion-icon name="create" @click="startEdit"></ion-icon>
@@ -17,7 +17,7 @@
 </template>
 
 <script>
-  import {mapActions, mapMutations} from 'vuex'
+  import {mapActions, mapMutations, mapGetters} from 'vuex'
   import CoefficientsPane from "../coefficients/CoefficientsPane";
   import coefPaneModes from "../coefficients/coef-pane-modes"
 
@@ -30,6 +30,12 @@
       editMode: false,
       coefPaneModes: coefPaneModes,
     }},
+    computed: {
+      ...mapGetters('parties', ['getMemberTotalDue']),
+      totalDue() { 
+        return this.getMemberTotalDue(this.member.id)
+      }
+    },
     methods: {
       ...mapActions('parties', [
         'removeMember',

@@ -200,10 +200,43 @@ const actions = {
 const getters = {
   membersCount: state => state.activeParty.members.length,
   getMemberById: state => memberId => state.activeParty.members.find(mem => mem.id === memberId),
+  getMemberTotalDue: (state, getters) => memberId => {
+    // Calculate total fee for all expenses basing on member's coeffs
+    const totalFee = state.activeParty.expenses
+      .map(exp => getters.getExpenseFeePerLogicalMember(exp.id) * getters.getCoefficient(memberId, exp.id).coeff)
+      .reduce((accumulator, amount) => accumulator + amount, 0)
+
+    // Subtract expenses paid by this member
+    const totalPaidByMember = state.activeParty.expenses
+      .filter(exp => exp.paidById === memberId)
+      .reduce((accumulator, exp) => accumulator + exp.amount, 0)
+
+    // Apply transfers
+    const totalSentTransfers = state.activeParty.transfers
+      .filter(tr => tr.senderId === memberId)
+      .reduce((accumulator, tr) => accumulator + tr.amount, 0)
+
+    const totalReceivedTransfers = state.activeParty.transfers
+      .filter(tr => tr.receiverId === memberId)
+      .reduce((accumulator, tr) => accumulator - tr.amount, 0)
+
+    return totalFee - totalPaidByMember - totalSentTransfers + totalReceivedTransfers
+  },
 
   getExpenseById: state => expenseId => state.activeParty.expenses.find(exp => exp.id === expenseId),
+  getExpenseFeePerLogicalMember: (state, getters) => expenseId => {
+    const expense = getters.getExpenseById(expenseId)
+    const logicalMembers = state.activeParty.coefficients
+      .filter(coeff => coeff.expenseId === expenseId)
+      .reduce((result, coeff) => result + coeff.coeff, 0)
 
-  coefficientsSum: state => state.activeParty.coefficients.reduce((result, coeff) => result + coeff.coefficient, 0),
+    return expense.amount / logicalMembers
+  },
+
+  getCoefficient: state => (memberId, expenseId) => state.activeParty.coefficients.find(
+    coef => coef.memberId === memberId && coef.expenseId === expenseId
+  ),
+  coefficientsSum: state => state.activeParty.coefficients.reduce((result, coeff) => result + coeff.coeff, 0),
   getCoefficientsBy: state => (field, value) => {
     return state.activeParty.coefficients.filter(coef => coef[field] === value)
   },

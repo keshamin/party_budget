@@ -57,7 +57,7 @@
     }, 
     computed: {
       ...mapState('parties', ['activeParty']),
-      ...mapGetters('parties', ['getMemberById']),
+      ...mapGetters('parties', ['getMemberById', 'getExpenseFeePerLogicalMember']),
       member() {
         return this.getMemberById(this.expense.paidById)
       }
