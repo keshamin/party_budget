@@ -218,7 +218,7 @@ const getters = {
 
     const totalReceivedTransfers = state.activeParty.transfers
       .filter(tr => tr.receiverId === memberId)
-      .reduce((accumulator, tr) => accumulator - tr.amount, 0)
+      .reduce((accumulator, tr) => accumulator + tr.amount, 0)
 
     return totalFee - totalPaidByMember - totalSentTransfers + totalReceivedTransfers
   },
