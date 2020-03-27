@@ -1,7 +1,47 @@
+@import "bootstrap";
+
+$green_background_color: #6DBB88;
+$darkgreen: #05461c;
+
+// Resetting defaults
+p, h1 {
+  margin: 0;
+  padding: 0;
+}
+
 .clickable {
   cursor: pointer;
 }
 
 ion-icon {
   font-size: 24px;
+}
+
+.darkgreen-text {
+  color: $darkgreen;
+}
+
+a {
+  color: $darkgreen;
+  text-decoration: underline;
+
+  &:hover {
+    color: #14612f;
+  }
+}
+
+// Buttons
+
+.my-outline-btn {
+  @extend .btn-outline-light;
+
+  border-color: $darkgreen;
+  color: $darkgreen;
+
+  &:hover {
+    background-color: #40905c;
+    color: #fbff2a;
+    border-color: #fbff2a;
+  }
+
 }

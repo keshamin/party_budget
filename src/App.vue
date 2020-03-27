@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="container-fluid">
     <app-header/>
     <party-form/>
     <parties-list/>
@@ -46,6 +46,6 @@
   }
 </script>
 
-<style>
+<style lang="scss">
   @import "styles.scss";
 </style>

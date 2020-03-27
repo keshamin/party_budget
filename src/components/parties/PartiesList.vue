@@ -1,7 +1,7 @@
 <template>
-  <ul>
+  <div class="parties-list row">
     <party-item v-for="party in partySummaries" v-bind:party="party" v-bind:key="party.id"/>
-  </ul>
+  </div>
 </template>
 
 <script>
@@ -34,5 +34,9 @@
 </script>
 
 <style scoped>
+
+.parties-list {
+  padding: 5px 10px;
+}
 
 </style>

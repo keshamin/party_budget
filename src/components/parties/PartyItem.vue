@@ -1,10 +1,8 @@
 <template>
-  <li>
-    <div @click="selectParty(party.id)" class="clickable">
-      ({{ party.id }}) {{ party.name }}
-      <span v-if="activeParty && activeParty.id === party.id"> <--- </span>
-    </div>
-  </li>
+  <div @click="selectParty(party.id)" class="clickable party-item">
+    <span class="party-title">{{ party.name }}</span>
+    <!-- <span v-if="activeParty && activeParty.id === party.id"> <--- </span> -->
+  </div>
 </template>
 
 <script>
@@ -22,6 +20,23 @@
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "styles.scss";
+
+.party-item {
+  margin-right: 10px;
+  padding: 10px;
+
+
+  border: 1px solid $darkgreen;
+  border-radius: 0.25em;
+
+
+}
+
+.party-title {
+  color: $darkgreen;
+  font-weight: bold;
+}
 
 </style>
