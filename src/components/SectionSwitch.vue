@@ -1,9 +1,9 @@
 <template>
     <ul>
       <li v-for="section in sections" :key="section.type">
-        <button @click="$emit('section-switched', section.type)" class="clickable">
+        <div @click="$emit('section-switched', section.type)" class="clickable">
           {{ section.label }}
-        </button>
+        </div>
       </li>
     </ul>
 </template>
