@@ -1,15 +1,16 @@
 <template>
   <div id="app">
     <app-header/>
-    <party-form/>
-    <parties-list/>
-    <details-area/>
+    <section class="section has-background-light">
+      <party-form/>
+      <parties-list/>
+      <details-area/>
+    </section>
   </div>
 </template>
 
 <script>
-  import Cookies from 'js-cookie'
-  import {mapActions, mapState, mapMutations, mapGetters} from 'vuex'
+  import {mapActions, mapState} from 'vuex'
 
   import store from './store'
   import PartiesList from '@/components/parties/PartiesList.vue'
@@ -46,6 +47,6 @@
   }
 </script>
 
-<style>
+<style lang="scss">
   @import "styles.scss";
 </style>
