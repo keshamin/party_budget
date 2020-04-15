@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="margin-bottom: 20px">
     <label>
       Название новой вечеринки:
       <input type="text" v-model="partyName" placeholder="Придумайте название для вечеринки">

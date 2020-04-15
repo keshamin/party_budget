@@ -1,14 +1,79 @@
+<script>
+  import states from '@/model/party-states'
+  import { textifyState } from '@/model/party-states'
+  import {mapActions, mapState} from 'vuex'
+
+  export default {
+    name: "PartyDetailedView",
+    beforeCreate() {
+      this.states = states
+    },
+    data() { return {
+      editMode: false,
+      updatedParty: {},
+      isLoading: false,
+    }},
+    computed: {
+      ...mapState('parties', {party: 'activeParty'}),
+      isCompleted() { return this.party.state === states.completed },
+      isInProgress() { return this.party.state === states.inProgress }
+    },
+    methods: {
+      ...mapActions('parties', [
+        'removeParty',
+        'updateParty',
+        'changePartyState',
+      ]),
+
+      removePartyHandler() {
+        this.removeParty(this.party.id)
+      },
+
+      startEdit() {
+        this.updatedParty = Object.assign({}, this.party)
+        this.editMode = true
+      },
+
+      async confirmEdit() {
+        await this.updateParty(this.updatedParty)
+        this.editMode = false
+      },
+
+      cancelEdit() {
+        this.editMode = false
+      },
+
+      async changeState(state) {
+        let updatedParty = Object.assign({}, this.party)
+        updatedParty.state = state
+        this.updateParty(updatedParty)
+      },
+
+      async moveToComplete() {
+        await this.changeState(states.completed)
+      },
+
+      async moveToInProgress() {
+        await this.changeState(states.inProgress)
+      },
+      textifyState
+    },
+  }
+</script>
+
 <template>
   <div>
-    <h3>
+    <h3 class="title">
       <span v-show="!editMode">
         {{ party.name }}
       </span>
       <span v-show="editMode">
         <input type="text" v-model.trim="updatedParty.name">
       </span>
-
-      - {{ party.state }}
+      - 
+      <span :class="{'is-in-progress': isInProgress, 'is-completed': isCompleted}">
+        {{ textifyState(party.state) }}
+      </span>
     </h3>
 
     <span v-show="!editMode">
@@ -49,66 +114,15 @@
   </div>
 </template>
 
-<script>
-  import states from '@/model/party-states'
-  import {mapGetters, mapActions, mapState} from 'vuex'
+<style scoped lang="scss">
+@import 'bulma/bulma.sass';
 
-  export default {
-    name: "PartyDetailedView",
-    beforeCreate() {
-      this.states = states
-    },
-    data() { return {
-      editMode: false,
-      updatedParty: {},
-      isLoading: false,
-    }},
-    computed: {
-      ...mapState('parties', {party: 'activeParty'}),
-    },
-    methods: {
-      ...mapActions('parties', [
-        'removeParty',
-        'updateParty',
-        'changePartyState',
-      ]),
+.is-in-progress {
+  color: $warning;
+}
 
-      removePartyHandler() {
-        this.removeParty(this.party.id)
-      },
-
-      startEdit() {
-        this.updatedParty = Object.assign({}, this.party)
-        this.editMode = true
-      },
-
-      async confirmEdit() {
-        await this.updateParty(this.updatedParty)
-        this.editMode = false
-      },
-
-      cancelEdit() {
-        this.editMode = false
-      },
-
-      async changeState(state) {
-        let updatedParty = Object.assign({}, this.party)
-        updatedParty.state = state
-        this.updateParty(updatedParty)
-      },
-
-      async moveToComplete() {
-        await this.changeState(states.completed)
-      },
-
-      async moveToInProgress() {
-        await this.changeState(states.inProgress)
-      }
-
-    },
-  }
-</script>
-
-<style scoped>
+.is-completed {
+  color: $primary;
+}
 
 </style>
