@@ -68,46 +68,58 @@
         {{ party.name }}
       </span>
       <span v-show="editMode">
-        <input type="text" v-model.trim="updatedParty.name">
+        <input class="input is-large" type="text" v-model.trim="updatedParty.name">
       </span>
-      - 
+    </h3>
+    <p class="subtitle is-uppercase has-text-weight-bold	">
       <span :class="{'is-in-progress': isInProgress, 'is-completed': isCompleted}">
         {{ textifyState(party.state) }}
       </span>
-    </h3>
+    </p>
 
     <span v-show="!editMode">
-      <button @click="startEdit">
-        <ion-icon name="create"></ion-icon>
-        Переименовать
-      </button>
-
-      <span v-show="party.state === states.inProgress">
-        <button @click="moveToComplete">
-          <ion-icon name="checkmark"></ion-icon>
-          Завершить
+      <div class="buttons">
+        <button class="button is-medium" @click="startEdit">
+          <span class="icon">
+            <i class="fas fa-edit"></i>
+          </span>
+          <span>Переименовать</span>
         </button>
-      </span>
-      <span v-show="party.state !== states.inProgress">
-        <button @click="moveToInProgress">
-          <ion-icon name="hammer"></ion-icon>
-          Вернуться к работе
-        </button>
-      </span>
 
-      <button @click="removePartyHandler">
-        <ion-icon name="ios-trash"></ion-icon>
-        Удалить
-      </button>
+        <button class="button is-medium" :class="{'is-hidden':	party.state === states.completed}" @click="moveToComplete">
+          <span class="icon">
+            <i class="fas fa-check"></i>
+          </span>
+          <span>Завершить</span>
+        </button>
+
+        <button class="button is-medium" :class="{'is-hidden':	party.state === states.inProgress}" @click="moveToInProgress">
+          <span class="icon">
+            <i class="fas fa-wrench"></i>
+          </span>
+          <span>Вернуться к работе</span>
+        </button>
+        
+        <button class="button is-medium" @click="removePartyHandler">
+          <span class="icon">
+              <i class="fas fa-trash"></i>
+            </span>
+            <span>Удалить</span>
+        </button>
+      </div>
     </span>
     <span v-show="editMode">
-      <button @click="confirmEdit">
-        <ion-icon name="checkmark"></ion-icon>
-        OK
+      <button class="button" @click="confirmEdit">
+        <span class="icon">
+            <i class="fas fa-check"></i>
+          </span>
+          <span>ОК</span>
       </button>
-      <button @click="cancelEdit">
-        <ion-icon name="close"></ion-icon>
-        Отмена
+      <button class="button" @click="cancelEdit">
+        <span class="icon">
+            <i class="fas fa-times"></i>
+          </span>
+          <span>Отмена</span>
       </button>
     </span>
 
@@ -115,10 +127,15 @@
 </template>
 
 <style scoped lang="scss">
-@import 'bulma/bulma.sass';
+@import 'styles.scss';
+
+h3 {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+}
 
 .is-in-progress {
-  color: $warning;
+  color: $dark-yellow;
 }
 
 .is-completed {
