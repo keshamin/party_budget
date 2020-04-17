@@ -28,7 +28,7 @@
 </template>
 
 <style scoped lang="scss">
-@import 'bulma/bulma.sass';
+@import 'styles.scss';
 .party-item {
   border: 2px solid $dark;
 
