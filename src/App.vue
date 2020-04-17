@@ -2,7 +2,6 @@
   <div id="app">
     <app-header/>
     <section class="section has-background-light">
-      <party-form/>
       <parties-list/>
       <details-area/>
     </section>
@@ -15,7 +14,6 @@
   import store from './store'
   import PartiesList from '@/components/parties/PartiesList.vue'
   import AppHeader from '@/components/AppHeader.vue'
-  import PartyForm from '@/components/parties/PartyForm.vue'
   import DetailsArea from '@/components/DetailsArea.vue'
 
   export default {
@@ -24,7 +22,6 @@
     components: {
       AppHeader,
       PartiesList,
-      PartyForm,
       DetailsArea,
     },
 

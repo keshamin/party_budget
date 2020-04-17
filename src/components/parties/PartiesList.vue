@@ -1,11 +1,13 @@
 <script>
   import {mapState, mapActions} from 'vuex'
   import PartyItem from './PartyItem.vue'
+  import NewParty from './NewParty'
 
   export default {
     name: "PartiesList",
     components: {
-      PartyItem
+      PartyItem,
+      NewParty
     },
     computed: {
       ...mapState('parties', [
@@ -33,6 +35,7 @@
       Список вечеринок
     </h2>
     <div class="party-list">
+      <new-party/>
       <party-item class="party-item" v-for="party in partySummaries" v-bind:party="party" v-bind:key="party.id"/>
     </div>
   </div>
