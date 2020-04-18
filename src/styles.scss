@@ -1,6 +1,12 @@
 // Customizing Bulma
+@import '~bulma/sass/utilities/initial-variables';
+@import "~bulma/sass/utilities/functions";
+@import '~bulma/sass/utilities/derived-variables';
+
+$scheme-main: $light;
 $box-padding: 1.25rem 0.75rem;
 $section-padding: 1.5rem;
+$tabs-link-active-color: $primary;
 
 @import '~bulma/bulma';
 
