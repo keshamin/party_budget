@@ -38,4 +38,8 @@ export default {
 .tabs {
   margin-top: 1.2rem; 
 }
+
+.is-active {
+  font-weight: bold;
+}
 </style>
