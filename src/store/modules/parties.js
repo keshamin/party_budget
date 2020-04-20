@@ -17,23 +17,23 @@ const mutations = {
   resetPartySummaries: (state) => state.partySummaries = [],
   appendPartySummary: (state, partySummary) => state.partySummaries.push(partySummary),
   removePartySummary: (state, partyId) => {
-    state.partySummaries.splice(state.partySummaries.indexOf(state.partySummaries.filter(party => party.id === partyId)[0]), 1)
+    state.partySummaries.splice(state.partySummaries.findIndex(party => party.id === partyId), 1)
   },
 
   addMember: (state, newMember) => state.activeParty.members.push(newMember),
   removeMember: (state, memberId) => {state.activeParty.members.splice(
-    state.activeParty.members.indexOf(
-      state.activeParty.members.filter(mem => mem.id === memberId)
-    )
+    state.activeParty.members.findIndex(mem => mem.id === memberId),
+    1
   )},
   updateMember: (state, updatedMember) => {
     const memberIdx = state.activeParty.members.findIndex(member => member.id === updatedMember.id)
-    state.activeParty.expenses.splice(memberIdx, 1, updatedMember)
+    state.activeParty.members.splice(memberIdx, 1, updatedMember)
   },
 
   addExpense: (state, newExpense) => state.activeParty.expenses.push(newExpense),
   removeExpense: (state, expenseId) => {state.activeParty.expenses.splice(
-    state.activeParty.expenses.findIndex(expense => expense.id === expenseId)
+    state.activeParty.expenses.findIndex(expense => expense.id === expenseId),
+    1
   )},
   updateExpense: (state, updatedExpense) => {
     const expenseIdx = state.activeParty.expenses.findIndex(expense => expense.id === updatedExpense.id)
@@ -42,17 +42,29 @@ const mutations = {
 
   addTransfer: (state, newTransfer) => state.activeParty.transfers.push(newTransfer),
   removeTransfer: (state, transferId) => {state.activeParty.transfers.splice(
-    state.activeParty.transfers.findIndex(transfer => transfer.id === transferId)
+    state.activeParty.transfers.findIndex(transfer => transfer.id === transferId),
+    1
   )},
+  removeTransfersByMember: (state, memberId) => {
+    state.activeParty.transfers = state.activeParty.transfers.filter(
+      t => t.senderId !== memberId && t.receiverId !== memberId)
+  },
   updateTransfer: (state, updatedTransfer) => {
     const transferIdx = state.activeParty.transfers.findIndex(transfer => transfer.id === updatedTransfer.id)
     state.activeParty.transfers.splice(transferIdx, 1, updatedTransfer)
   },
 
   addCoefficient: (state, newCoefficient) => {state.activeParty.coefficients.push(newCoefficient)},
-  removeCoefficient: (state, coefficientId) => {state.activeParty.coefficients.splice(
-    state.activeParty.coefficients.findIndex(coefficient => coefficient.id === coefficientId)
-  )},
+  // removeCoefficient: (state, coefficientId) => {state.activeParty.coefficients.splice(
+  //   state.activeParty.coefficients.findIndex(coefficient => coefficient.id === coefficientId),
+  //   1
+  // )},
+  removeCoeffsByMember: (state, memberId) => {
+    state.activeParty.coefficients = state.activeParty.coefficients.filter(c => c.memberId !== memberId)
+  },
+  removeCoeffsByExpense: (state, expenseId) => {
+    state.activeParty.coefficients = state.activeParty.coefficients.filter(c => c.expenseId !== expenseId)
+  },
   updateCoefficient: (state, updatedCoefficient) => {
     const coefficientIdx = state.activeParty.coefficients.findIndex(coefficient => 
       coefficient.memberId === updatedCoefficient.memberId && coefficient.expenseId === updatedCoefficient.expenseId
@@ -117,21 +129,18 @@ const actions = {
     Repo.saveParty(activeParty)
   },
 
-  removeMember({commit, rootState}, memberId) {
+  removeMember({commit, rootState, dispatch}, memberId) {
     let activeParty = rootState.parties.activeParty
 
-    commit('removeMember', memberId)
-    activeParty.coefficients.filter(coef => coef.memberId === memberId).forEach(coef => {
-      commit('removeCoefficient', coef.id)
-    })
-
+    commit('removeTransfersByMember', memberId)
+    
     activeParty.expenses.filter(exp => exp.paidById === memberId).forEach(exp => {
-      commit('removeExpense', exp.id)
+      dispatch('removeExpense', exp.id)
     })
 
-    activeParty.transfers.filter(trans => trans.senderId === memberId || trans.receiverId === memberId).forEach(
-      exp => {commit('removeTransfer', exp.id)}
-    )
+    commit('removeCoeffsByMember', memberId)
+
+    commit('removeMember', memberId)
 
     Repo.saveParty(activeParty)
   },
@@ -158,11 +167,8 @@ const actions = {
 
   removeExpense({commit, rootState}, expenseId) {
     let activeParty = rootState.parties.activeParty
-
+    commit('removeCoeffsByExpense', expenseId)
     commit('removeExpense', expenseId)
-    activeParty.coefficients.filter(coef => coef.expenseId === expenseId).forEach(coef => {
-      commit('removeCoefficient', coef.id)
-    })
     Repo.saveParty(activeParty)
   },
 
