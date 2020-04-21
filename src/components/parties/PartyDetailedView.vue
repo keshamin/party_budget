@@ -109,18 +109,20 @@
       </div>
     </span>
     <span v-show="editMode">
-      <button class="button" @click="confirmEdit">
-        <span class="icon">
-            <i class="fas fa-check"></i>
-          </span>
-          <span>ОК</span>
-      </button>
-      <button class="button" @click="cancelEdit">
-        <span class="icon">
-            <i class="fas fa-times"></i>
-          </span>
-          <span>Отмена</span>
-      </button>
+      <div class="buttons">
+        <button class="button is-medium" @click="confirmEdit">
+          <span class="icon">
+              <i class="fas fa-check"></i>
+            </span>
+            <span>ОК</span>
+        </button>
+        <button class="button is-medium" @click="cancelEdit">
+          <span class="icon">
+              <i class="fas fa-times"></i>
+            </span>
+            <span>Отмена</span>
+        </button>
+      </div>
     </span>
 
   </div>
