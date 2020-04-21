@@ -1,19 +1,3 @@
-<template>
-  <div v-show="coefficients.length">
-    <ul>
-      <li v-for="coefficient in editableCoefficients" :key="coefficient.id">
-        <span v-if="columnGetter(coefficient[columnKey])">
-          {{ getColumnRepr(columnGetter(coefficient[columnKey])) }}:
-          <input type="number" v-model.number="coefficient.coeff">
-        </span>
-      </li>
-    </ul>
-    <button @click="saveCoeffs">
-      Сохранить
-    </button>
-  </div>
-</template>
-
 <script>
   import {mapGetters, mapState, mapActions} from 'vuex'
   import coefPaneModes from './coef-pane-modes'
@@ -101,6 +85,52 @@
   }
 </script>
 
-<style scoped>
+<template>
+  <tr v-show="coefficients.length" class="coef-row">
+    <td colspan="3">
+      <p class="has-text-grey has-text-weight-semibold	">Коэффициенты участия</p>
+      <div class="columns">
+        <div class="column">
+          <div class="columns is-multiline">
+            <div class="column field" v-for="coefficient in editableCoefficients" :key="coefficient.id">
+              <div class="label has-text-centered">
+                {{ getColumnRepr(columnGetter(coefficient[columnKey])) }}
+              </div>
+              <div class="control is-centered">
+                <input type="number" class="input" v-model.number="coefficient.coeff">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="column">
+          <button class="button" @click="saveCoeffs">
+            <span class="icon">
+              <i class="fas fa-check"></i>
+            </span>
+            <span>Сохранить</span>
+          </button>
+        </div>
+      </div>
+    </td>
+  </tr>
+</template>
 
+<style scoped lang="scss">
+.field {
+  display: inline-block;
+  /* margin-right: 1rem; */
+
+}
+.control {
+  max-width: 50px;
+  margin: 0 auto;
+}
+.label {
+  font-weight: unset;
+}
+
+.coef-row {
+  border: 1px solid #dbdbdb;
+  border-width: 0 0 1px;
+}
 </style>

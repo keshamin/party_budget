@@ -1,5 +1,5 @@
 <template>
-  <div v-if="activeParty !== null">
+  <div v-if="activeParty !== null" style="padding-bottom: 50px">
     <party-detailed-view/>
     <section-switch/>
     <div class="info-area">

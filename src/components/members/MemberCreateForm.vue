@@ -1,12 +1,12 @@
 <template>
-  <div>
-    Новый участник<br>
-    <label>
-        Имя:<br>
-        <input type="text" v-model="memberName">
-    </label>
-    <input type="button" value="Создать" @click="createMemberHandler" placeholder="Имя">
-  </div>
+  <tr>
+    <td colspan="2">
+      <input type="text" class="input" placeholder="Имя" v-model="memberName">
+    </td>
+    <td>
+      <button class="button" @click="createMemberHandler">Добавить</button>
+    </td>
+  </tr>
 </template>
 
 <script>
