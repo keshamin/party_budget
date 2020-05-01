@@ -25,3 +25,9 @@ html {
   margin-left: auto !important;
   margin-right: auto !important;
 }
+
+.section {
+  @include mobile {
+    padding: 0.8rem;
+  }
+}
