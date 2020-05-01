@@ -25,6 +25,7 @@ export default {
 <template>
 <tbody>
     <member-row :member="member" @switch-coeffs="switchCoeffs"/>
-    <coefficients-pane v-show="showCoeffs" :mode="coefPaneModes.MEMBER" :mode-key="member.id"/>
+    <coefficients-pane v-show="showCoeffs" :mode="coefPaneModes.MEMBER" :mode-key="member.id"
+        :colspan="3"/>
 </tbody>
 </template>

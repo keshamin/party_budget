@@ -1,10 +1,18 @@
 <template>
   <tr>
     <td colspan="2">
+      <p>Новый участник</p>
       <input type="text" class="input" placeholder="Имя" v-model="memberName">
     </td>
     <td>
-      <button class="button" @click="createMemberHandler">Добавить</button>
+      <!-- Following p tag is for vertical aligning input and button -->
+      <p>&nbsp;</p> 
+      <button class="button" @click="createMemberHandler">
+        <span class="icon">
+          <i class="fas fa-plus"></i>
+        </span>
+        <span class="is-hidden-mobile">Добавить</span>
+      </button>
     </td>
   </tr>
 </template>
@@ -45,6 +53,12 @@
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import 'styles.scss';
 
+.icon {
+  @include mobile {
+    margin: 0 auto !important;
+  }
+}
 </style>
