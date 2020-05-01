@@ -1,35 +1,3 @@
-<template>
-  <div>
-    Новый перевод<br>
-    <label>
-      Заметка:<br>
-      <input type="text" v-model="transferNote"><br>
-    </label>
-    <label>
-      Сумма:<br>
-      <input type="number" v-model.number="transferAmount"><br>
-    </label>
-    <label>
-      Отправитель:<br>
-      <select v-model="transferSenderId">
-          <option v-for="member in activeParty.members" v-bind:value="member.id" :key="member.id">
-          {{ member.name }}
-        </option>
-      </select><br>
-    </label>
-    <label>
-      Получатель:<br>
-      <select v-model="transferReceiverId">
-          <option v-for="member in activeParty.members" v-bind:value="member.id" :key="member.id">
-          {{ member.name }}
-        </option>
-      </select><br>
-    </label>
-
-    <input type="button" value="Создать" @click="createTransferHandler" placeholder="Имя">
-  </div>
-</template>
-
 <script>
   import {mapActions, mapState} from 'vuex'
   import Transfer from '@/model/transfer'
@@ -99,6 +67,137 @@
   }
 </script>
 
-<style scoped>
+<template>
+<tbody>
+  <tr>
+    <td colspan="5" style="border-bottom: unset">
+      Новый перевод
+    </td>
+  </tr>
+  <tr>
+    <td colspan="4">
+      <div class="edit-fields-row">
+        <div class="field">
+          <div class="label">
+            Кто
+          </div>
+          <div class="control">
+            <div class="select">
+              <select v-model.number="transferSenderId">
+                <option v-for="member in activeParty.members" v-bind:value="member.id" :key="member.id">
+                  {{ member.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <div class="label">
+            Кому
+          </div>
+          <div class="control">
+            <div class="select">
+              <select v-model.number="transferReceiverId">
+                <option v-for="member in activeParty.members" v-bind:value="member.id" :key="member.id">
+                  {{ member.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="edit-fields-row">
+        <div class="field">
+          <div class="label">
+            Сколько
+          </div>
+          <div class="control">
+            <input type="text" class="input" v-model.number="transferAmount">
+          </div>
+        </div>
+        <div class="field">
+          <div class="label">
+            Заметка
+          </div>
+          <div class="control">
+            <input type="text" class="input" v-model.trim="transferNote">
+          </div>
+        </div>
+      </div>
+    </td>
+    <td>
+      <div class="field">
+        <div class="label">&nbsp;</div>
+        <button class="button" @click="createTransferHandler">
+        <span class="icon">
+          <i class="fas fa-plus"></i>
+        </span>
+        <span class="is-hidden-mobile">Добавить</span>
+      </button>
+      </div>
+      
+    </td>
+  </tr>
+</tbody>
+  <!-- <div>
+    Новый перевод<br>
+    <label>
+      Заметка:<br>
+      <input type="text" v-model="transferNote"><br>
+    </label>
+    <label>
+      Сумма:<br>
+      <input type="number" v-model.number="transferAmount"><br>
+    </label>
+    <label>
+      Отправитель:<br>
+      <select v-model="transferSenderId">
+          <option v-for="member in activeParty.members" v-bind:value="member.id" :key="member.id">
+          {{ member.name }}
+        </option>
+      </select><br>
+    </label>
+    <label>
+      Получатель:<br>
+      <select v-model="transferReceiverId">
+          <option v-for="member in activeParty.members" v-bind:value="member.id" :key="member.id">
+          {{ member.name }}
+        </option>
+      </select><br>
+    </label>
+
+    <input type="button" value="Создать" @click="createTransferHandler" placeholder="Имя">
+  </div> -->
+</template>
+
+
+<style scoped lang="scss">
+@import 'styles.scss';
+
+.icon {
+  @include mobile {
+    margin: 0 auto !important;
+  }
+}
+
+.edit-fields-row {
+  display: flex;
+
+  & > div {
+    flex: 1;
+
+    & > input, select {
+      width: 100% !important;
+    }
+  }
+
+  & > div:not(:last-child) {
+    padding-right: 0.5rem;
+  }
+}
+
+tr:last-child td {
+  border-bottom: 1px solid rgb(219, 219, 219) !important;
+}
 
 </style>
