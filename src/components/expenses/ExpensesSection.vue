@@ -38,26 +38,5 @@ table.expense-table {
     font-size: 1.1rem;
   }
 
-  td p, th p {
-    // width: 25%;
-    display: inline-block;
-    overflow-wrap: break-word;
-  }
-
-  div.select {
-    max-width: 8rem;
-  }
-
-  input, select {
-    font-size: inherit !important;
-  }
-  button {
-    font-size: inherit !important;
-  }
-
-  select {
-    padding-top: calc(0.5em - 1px) !important;
-    padding-bottom: calc(0.5em - 1px) !important;
-  }
 }
 </style>

@@ -36,6 +36,30 @@
   }
 </script>
 
-<style scoped>
+<style lang="scss">
+
+table {
+  td p, th p {
+    // width: 25%;
+    display: inline-block;
+    word-break: break-word;
+  }
+
+  div.select {
+    max-width: 100%;
+  }
+
+  input, select {
+    font-size: inherit !important;
+  }
+  button {
+    font-size: inherit !important;
+  }
+
+  select {
+    padding-top: calc(0.5em - 1px) !important;
+    padding-bottom: calc(0.5em - 1px) !important;
+  }
+}
 
 </style>
