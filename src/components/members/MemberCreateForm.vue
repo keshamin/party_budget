@@ -1,12 +1,15 @@
 <template>
+<tbody>
+  <tr>
+    <td colspan="3" style="border-bottom: unset">
+      Новый участник
+    </td>
+  </tr>
   <tr>
     <td colspan="2">
-      <p>Новый участник</p>
       <input type="text" class="input" placeholder="Имя" v-model="memberName">
     </td>
     <td>
-      <!-- Following p tag is for vertical aligning input and button -->
-      <p>&nbsp;</p> 
       <button class="button" @click="createMemberHandler">
         <span class="icon">
           <i class="fas fa-plus"></i>
@@ -15,6 +18,7 @@
       </button>
     </td>
   </tr>
+</tbody>
 </template>
 
 <script>
@@ -61,4 +65,9 @@
     margin: 0 auto !important;
   }
 }
+
+tr:last-child td {
+  border-bottom: 1px solid rgb(219, 219, 219) !important;
+}
+
 </style>
