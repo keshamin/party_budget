@@ -5,7 +5,7 @@
 
   export default {
     name: "CoefficientsPane",
-    props: ['mode', 'modeKey'],
+    props: ['mode', 'modeKey', 'colspan'],
     data() { return {
       editableCoefficients: [],
       originalCoefficients: [],
@@ -87,7 +87,7 @@
 
 <template>
   <tr v-show="coefficients.length" class="coef-row">
-    <td colspan="3">
+    <td :colspan="colspan">
       <p class="has-text-grey has-text-weight-semibold	">Коэффициенты участия</p>
       <div class="columns">
         <div class="column">
