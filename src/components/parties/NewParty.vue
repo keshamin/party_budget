@@ -9,7 +9,7 @@ export default {
         async onClick() {
             const today = new Date()
             const fmt = new Intl.NumberFormat('ru-RU', {minimumIntegerDigits: 2})
-            const partyName = `Вечеринка ${fmt.format(today.getDay())}/${fmt.format(today.getMonth())}`
+            const partyName = `Вечеринка ${fmt.format(today.getDate())}/${fmt.format(today.getMonth() + 1)}`
             const party = {name: partyName}
             await this.createParty(party)
         }
