@@ -45,5 +45,11 @@
 </script>
 
 <style lang="scss">
-  @import "styles.scss";
+@import "styles.scss";
+
+html {
+  @include tablet {
+    font-size: 1rem;
+  }
+}
 </style>
