@@ -2,8 +2,11 @@ name: Publish to GH Pages from master
 
 on:
   push:
-    branches:    
-      - master    
+    branches:
+      - master
+
+env:
+  CUSTOM_DOMAIN: perevedu.minii.ru
 
 jobs:
   build_and_deploy:
@@ -15,9 +18,12 @@ jobs:
       run: npm i
     - name: Build Vue.js app
       run: npm run build
-    - name: Build and Deploy
-      uses: JamesIves/github-pages-deploy-action@releases/v3
+    - name: Deploy to GitHub Pages
+      uses: crazy-max/ghaction-github-pages@v1.3.0
       with:
-        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-        BRANCH: gh-pages # The branch the action should deploy to.
-        FOLDER: dist # The folder the action should deploy.
+        target_branch: gh-pages
+        build_dir: dist
+        keep_history: true
+        fqdn: ${{ env.CUSTOM_DOMAIN }}
+      env:
+        GITHUB_PAT: ${{ secrets.ACCESS_TOKEN }}
