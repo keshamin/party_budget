@@ -1,5 +1,5 @@
 <template>
-<table class="table is-fullwidth expense-table" style="table-layout:fixed;">
+<table class="table is-fullwidth expense-table">
   <tr>
     <th>Расход</th>
     <th>Сумма</th>
@@ -37,6 +37,5 @@ table.expense-table {
   @include mobile {
     font-size: 1.1rem;
   }
-
 }
 </style>

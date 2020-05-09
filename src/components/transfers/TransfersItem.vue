@@ -58,21 +58,41 @@
 <tr>
   <td v-show="!editMode">
     <p>{{sender.name}}</p>
-    
   </td>
   <td v-show="!editMode">
     <p>{{receiver.name}}</p>
-    
   </td>
   <td v-show="!editMode">
     <p>{{transfer.amount}}</p>
-    
   </td>
   <td v-show="!editMode">
     <p>{{transfer.name}}</p>
-    
   </td>
-  <td colspan="4" v-show="editMode">
+  <td v-show="editMode" class="is-hidden-mobile">
+    <div class="select">
+      <select v-model.number="updatedTransfer.senderId">
+        <option v-for="member in activeParty.members" v-bind:value="member.id" :key="member.id">
+          {{ member.name }}
+        </option>
+      </select>
+    </div>
+  </td>
+  <td v-show="editMode" class="is-hidden-mobile">
+    <div class="select">
+      <select v-model.number="updatedTransfer.receiverId">
+        <option v-for="member in activeParty.members" v-bind:value="member.id" :key="member.id">
+          {{ member.name }}
+        </option>
+      </select>
+    </div>
+  </td>
+  <td v-show="editMode" class="is-hidden-mobile">
+    <input v-show="editMode" type="text" class="input" v-model.number="updatedTransfer.amount">
+  </td>
+  <td v-show="editMode" class="is-hidden-mobile">
+    <input v-show="editMode" type="text" class="input" v-model.trim="updatedTransfer.name">
+  </td>
+  <td colspan="4" v-show="editMode" class="is-hidden-tablet">
     <div class="edit-fields-row">
       <div class="field">
         <div class="label">
@@ -124,7 +144,7 @@
   </td>
 
   <td>
-    <span v-show="!editMode">
+    <span v-show="!editMode" class="is-hidden-tablet">
       <div class="field is-grouped">
         <div class="dropdown is-right is-hoverable post-options">
           <div class="dropdown-trigger">
@@ -153,7 +173,27 @@
         </div>
       </div>
     </span>
-    <span v-show="editMode" class="yn-buttons">
+    <span v-show="!editMode" class="is-hidden-mobile">
+      <div class="field is-grouped">
+        <p class="control">
+          <button class="button" @click="startEdit">
+            <span class="icon">
+              <i class="fas fa-edit"></i>
+            </span>
+            <span>Редактировать</span>
+          </button>
+        </p>
+        <p class="control">
+          <button class="button" @click="removeTransferHandler">
+            <span class="icon">
+              <i class="fas fa-trash"></i>
+            </span>
+            <span>Удалить</span>
+          </button>
+        </p>
+      </div>
+    </span>
+    <span v-show="editMode" class="yn-buttons is-hidden-tablet">
       <div class="field">
         <div class="label">&nbsp;</div>
         <button class="button" @click="confirmEdit">
@@ -170,6 +210,26 @@
         </button>
       </div>
     </span>
+    <span v-show="editMode" class="is-hidden-mobile">
+        <div class="field is-grouped">
+          <p class="control">
+            <button class="button" @click="confirmEdit">
+              <span class="icon">
+                <i class="fas fa-check"></i>
+              </span>
+              <span class="is-hidden-mobile">ОК</span>
+            </button>
+          </p>
+          <p class="control">
+            <button class="button" @click="cancelEdit">
+              <span class="icon">
+                <i class="fas fa-times"></i>
+              </span>
+              <span class="is-hidden-mobile">Отмена</span>
+            </button>
+          </p>
+        </div>
+      </span>
   </td>
 </tr>
 </template>

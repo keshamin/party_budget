@@ -116,6 +116,8 @@
 </template>
 
 <style scoped lang="scss">
+@import 'styles.scss';
+
 .field {
   display: inline-block;
   /* margin-right: 1rem; */
@@ -123,6 +125,9 @@
 }
 .control {
   max-width: 50px;
+  @include tablet {
+    max-width: 100px;
+  }
   margin: 0 auto;
 }
 .label {

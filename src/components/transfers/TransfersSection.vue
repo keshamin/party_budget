@@ -1,5 +1,5 @@
 <template>
-<table class="table is-fullwidth expense-table" style="table-layout:fixed;">
+<table class="table is-fullwidth expense-table">
   <tr>
     <th>Кто</th>
     <th>Кому</th>

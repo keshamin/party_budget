@@ -45,6 +45,11 @@ table {
     word-break: break-word;
   }
 
+  tr th:last-child{
+    width:1%;
+    white-space:nowrap;
+  }
+
   div.select {
     max-width: 100%;
   }

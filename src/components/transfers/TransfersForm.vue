@@ -75,7 +75,7 @@
     </td>
   </tr>
   <tr>
-    <td colspan="4">
+    <td colspan="4" class="is-hidden-tablet">
       <div class="edit-fields-row">
         <div class="field">
           <div class="label">
@@ -125,49 +125,44 @@
         </div>
       </div>
     </td>
+    <td class="is-hidden-mobile">
+      <div class="select">
+        <select v-model.number="transferSenderId">
+          <option v-for="member in activeParty.members" v-bind:value="member.id" :key="member.id">
+            {{ member.name }}
+          </option>
+        </select>
+      </div>
+    </td>
+    <td class="is-hidden-mobile">
+      <div class="select">
+        <select v-model.number="transferReceiverId">
+          <option v-for="member in activeParty.members" v-bind:value="member.id" :key="member.id">
+            {{ member.name }}
+          </option>
+        </select>
+      </div>
+    </td>
+    <td class="is-hidden-mobile">
+      <input type="text" class="input" v-model.number="transferAmount">
+    </td>
+    <td class="is-hidden-mobile">
+      <input type="text" class="input" v-model.trim="transferNote">
+    </td>
     <td>
       <div class="field">
-        <div class="label">&nbsp;</div>
+        <div class="label is-hidden-tablet">&nbsp;</div>
         <button class="button" @click="createTransferHandler">
-        <span class="icon">
-          <i class="fas fa-plus"></i>
-        </span>
-        <span class="is-hidden-mobile">Добавить</span>
-      </button>
+          <span class="icon">
+            <i class="fas fa-plus"></i>
+          </span>
+          <span class="is-hidden-mobile">Добавить</span>
+        </button>
       </div>
       
     </td>
   </tr>
 </tbody>
-  <!-- <div>
-    Новый перевод<br>
-    <label>
-      Заметка:<br>
-      <input type="text" v-model="transferNote"><br>
-    </label>
-    <label>
-      Сумма:<br>
-      <input type="number" v-model.number="transferAmount"><br>
-    </label>
-    <label>
-      Отправитель:<br>
-      <select v-model="transferSenderId">
-          <option v-for="member in activeParty.members" v-bind:value="member.id" :key="member.id">
-          {{ member.name }}
-        </option>
-      </select><br>
-    </label>
-    <label>
-      Получатель:<br>
-      <select v-model="transferReceiverId">
-          <option v-for="member in activeParty.members" v-bind:value="member.id" :key="member.id">
-          {{ member.name }}
-        </option>
-      </select><br>
-    </label>
-
-    <input type="button" value="Создать" @click="createTransferHandler" placeholder="Имя">
-  </div> -->
 </template>
 
 
