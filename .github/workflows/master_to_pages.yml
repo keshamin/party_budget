@@ -23,7 +23,6 @@ jobs:
       with:
         target_branch: gh-pages
         build_dir: dist
-        keep_history: true
         fqdn: ${{ env.CUSTOM_DOMAIN }}
       env:
         GITHUB_PAT: ${{ secrets.ACCESS_TOKEN }}
